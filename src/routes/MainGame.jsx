@@ -107,6 +107,7 @@ function MainGame() {
         <div className="buttons-container">
           {alphabet.map((letter) => (
             <button
+              className="button-53"
               key={letter}
               onClick={() => handleLetterClick(letter)}
               style={{
@@ -129,11 +130,19 @@ function MainGame() {
         </div>
         <div>
           {fail.length > 0 ? (
-            <button onClick={highScoreClick}>High Scores</button>
+            <button
+              className="button-53
+            "
+              onClick={highScoreClick}
+            >
+              High Scores
+            </button>
           ) : null}
         </div>
         {correctGuess.length === uniqueLetter.length && (
-          <button onClick={generateNewWord}>Next Word</button>
+          <button className="button-53" onClick={generateNewWord}>
+            Next Word
+          </button>
         )}
 
         <div className="hangman-images">

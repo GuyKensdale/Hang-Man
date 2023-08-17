@@ -4,7 +4,7 @@ import SignIn from "./routes/SignIn";
 import HighScores from "./routes/HighScores";
 function App() {
   return (
-    <div id="root">
+    <div className="body">
       <Router>
         <Routes>
           <Route path="/" element={<SignIn />} />
