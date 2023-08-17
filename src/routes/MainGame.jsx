@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import wordList from "../assets/Words";
 import alphabet from "../assets/alpha";
-import ImageGen from "./imageGen"; // Make sure to provide the correct path
+import ImageGen from "./imageGen";
 
 import { useLocation } from "react-router-dom";
 import { db } from "../../firebase";
