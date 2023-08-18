@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import image0 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image0.png";
-import image1 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image1.png";
-import image2 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image2.png";
-import image3 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image3.png";
-import image4 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image4.png";
-import image5 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image5.png";
-import image6 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image6.png";
-import image7 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image7.png";
-import image8 from "/home/guy/personal/Hang-Man2.0/src/hangmanimages/image8.png";
+import image0 from "../hangmanimages/image0.jpeg";
+import image1 from "../hangmanimages/image1.jpeg";
+import image2 from "../hangmanimages/image2.jpeg";
+import image3 from "../hangmanimages/image3.jpeg";
+import image8 from "../hangmanimages/image8.jpeg";
+import image4 from "../hangmanimages/image4.jpeg";
+import image5 from "../hangmanimages/image5.jpeg";
+import image6 from "../hangmanimages/image6.jpeg";
+import image7 from "../hangmanimages/image7.jpeg";
 
 function ImageGen({ incorrectGuesses }) {
   // Map incorrectGuesses to the appropriate image file name

@@ -184,6 +184,10 @@ const wordList = [
   "zephyr",
   "zigzag",
   "jazz",
+  "Hippopotomonstrosesquippedaliophobia",
+  "Abloom",
+  "Abysmal",
+  "Accommodating",
 ];
 
 export default wordList;
