@@ -4,10 +4,16 @@ import { useState } from "react";
 function SignIn() {
   const navigate = useNavigate();
   const [username, setUsername] = useState(""); // State to capture the input value
-
+  const [validUserState, setValidUserDate] = useState("");
   const handleSignIn = () => {
-    let path = `/MainGame`;
-    navigate(path, { state: { username } }); // Pass the username as state
+    if (username.length > 0 && username.length < 14) {
+      let path = `/MainGame`;
+      navigate(path, { state: { username } }); // Pass the username as state
+    } else {
+      setValidUserDate(
+        "Your username must be between 1-15 characters in length"
+      );
+    }
   };
 
   return (
@@ -26,6 +32,7 @@ function SignIn() {
         >
           Submit
         </button>
+        <h5>{validUserState}</h5>
         <h3>Created by Guy Kensdale</h3>
       </div>
     </>

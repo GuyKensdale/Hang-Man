@@ -8,6 +8,7 @@ import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
 import { addDoc, collection } from "firebase/firestore";
+
 function MainGame() {
   const [clickedLetters, setClickedLetters] = useState([]);
   const [randomWordState, setRandomWordState] = useState([]);
@@ -15,9 +16,12 @@ function MainGame() {
   const [points, setPoints] = useState(0);
   const [uniqueLetter, setUniqueLetter] = useState([]);
   const [fail, setFail] = useState("");
+  const [letterButtonsDisabled, setLetterButtonsDisabled] = useState(false); // New state for letter button disabling
   const location = useLocation();
-  const { username } = location.state || {}; // Access the username from the state
+  const { username } = location.state || {};
   const navigate = useNavigate();
+  const [highScoreButtonClicked, setHighScoreButtonClicked] = useState(false);
+
   function removeDuplicates(word) {
     const uniqueChars = [];
 
@@ -50,7 +54,7 @@ function MainGame() {
     setCorrectGuess(newCorrectGuesses);
 
     // Determine the maximum number of incorrect attempts allowed
-    const maxIncorrectAttempts = 6;
+    const maxIncorrectAttempts = 9;
 
     if (
       clickedLetters.length - newCorrectGuesses.length ===
@@ -58,8 +62,10 @@ function MainGame() {
     ) {
       console.log("fail");
       setFail("Game Over!");
+      setLetterButtonsDisabled(true); // Disable letter buttons on game over
     }
   }, [clickedLetters, randomWordState]);
+
   useEffect(() => {
     if (correctGuess.length === uniqueLetter.length) {
       const wordLength = randomWordState.length;
@@ -68,6 +74,7 @@ function MainGame() {
       setPoints((prevPoints) => prevPoints + wordPoints);
     }
   }, [correctGuess.length, uniqueLetter.length]);
+
   function handleLetterClick(letter) {
     const lowercaseLetter = letter.toLowerCase();
 
@@ -84,19 +91,25 @@ function MainGame() {
       )
       .join(" ");
   }
+
   const highScoreClick = async () => {
-    await addDoc(collection(db, "LeaderBoards"), {
-      name: username,
-      score: points,
-    });
-    let path = `/HighScores`;
-    navigate(path);
+    if (!highScoreButtonClicked) {
+      setHighScoreButtonClicked(true);
+      await addDoc(collection(db, "LeaderBoards"), {
+        name: username,
+        score: points,
+      });
+      let path = `/HighScores`;
+      navigate(path);
+    }
   };
+
   function generateNewWord() {
     const newRandomWord = getRandomWord().toLowerCase().split("");
     setRandomWordState(newRandomWord);
     setClickedLetters([]);
     setCorrectGuess([]);
+    setLetterButtonsDisabled(false); // Enable letter buttons when generating a new word
   }
 
   return (
@@ -115,7 +128,10 @@ function MainGame() {
                   ? "line-through"
                   : "none",
               }}
-              disabled={clickedLetters.includes(letter.toLowerCase())}
+              disabled={
+                letterButtonsDisabled ||
+                clickedLetters.includes(letter.toLowerCase())
+              }
             >
               {letter}
             </button>
@@ -124,27 +140,33 @@ function MainGame() {
         </div>
 
         <h2>{fail}</h2>
+        <div>
+          {letterButtonsDisabled === true && (
+            <h3>the word was {randomWordState}</h3>
+          )}
+        </div>
 
         <div>
           <h3>Points: {points}</h3>
         </div>
         <div>
-          {fail.length > 0 ? (
+          {fail.length > 0 && (
             <button
-              className="button-53
-            "
+              className="button-53"
               onClick={highScoreClick}
+              disabled={highScoreButtonClicked}
             >
               High Scores
             </button>
-          ) : null}
+          )}
         </div>
+
         {correctGuess.length === uniqueLetter.length && (
           <button className="button-53" onClick={generateNewWord}>
             Next Word
           </button>
         )}
-
+        <h1></h1>
         <div className="hangman-images">
           <ImageGen
             incorrectGuesses={clickedLetters.length - correctGuess.length}
